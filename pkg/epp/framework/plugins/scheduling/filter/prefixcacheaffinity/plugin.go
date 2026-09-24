@@ -237,7 +237,8 @@ func (p *Plugin) Filter(ctx context.Context, request *fwksched.InferenceRequest,
 			logger.V(logutil.DEBUG).Info("PrefixCacheAffinityFilter: TTFT load gate skipped, missing signal",
 				"stickyObserved", stickyOk, "nonStickyObserved", nonStickyOk)
 			recordDecision(p.typedName.Name, outcomeMissingSignal)
-			return sticky
+			span.SetAttributes(semconv.LLMDEPPFilterDecision(outcomeMissingSignal))
+			return endpoints
 		}
 		penalty := bestStickyTTFT - bestNonStickyTTFT
 		span.SetAttributes(semconv.LLMDEPPFilterTTFTPenaltyMs(penalty))
