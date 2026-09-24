@@ -85,7 +85,7 @@ func TestFilterRecordsDecisionOutcome(t *testing.T) {
 			outcome: outcomeLoadOverride,
 		},
 		{
-			name:    "missing signal keeps sticky",
+			name:    "missing signal returns all endpoints",
 			config:  Config{AffinityThreshold: 0.80, MaxTTFTPenaltyMs: 100, TTFTSource: TTFTSourceLatencyPredictor},
 			input:   []fwksched.Endpoint{makeEndpoint("a", 90, -1, 0), makeEndpoint("b", 10, 50, 0)},
 			outcome: outcomeMissingSignal,

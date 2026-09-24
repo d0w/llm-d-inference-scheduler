@@ -161,8 +161,7 @@ func TestFilter_StickyMissingSignalPredictor(t *testing.T) {
 		makeEndpoint("b", 10, 50, 0),
 	}
 	result := p.Filter(context.Background(), nil, endpoints)
-	assert.Equal(t, 1, len(result), "missing sticky signal should keep sticky set")
-	assert.Equal(t, "a", result[0].GetMetadata().ID.Name)
+	assert.Equal(t, endpoints, result, "missing sticky signal should return all endpoints")
 }
 
 func TestFilter_NonStickyMissingSignalPredictor(t *testing.T) {
@@ -172,8 +171,7 @@ func TestFilter_NonStickyMissingSignalPredictor(t *testing.T) {
 		makeEndpoint("b", 10, -1, 0),
 	}
 	result := p.Filter(context.Background(), nil, endpoints)
-	assert.Equal(t, 1, len(result), "missing non-sticky signal should keep sticky set")
-	assert.Equal(t, "a", result[0].GetMetadata().ID.Name)
+	assert.Equal(t, endpoints, result, "missing non-sticky signal should return all endpoints")
 }
 
 func TestFilter_NonStickyMissingSignalThroughput(t *testing.T) {
@@ -183,8 +181,7 @@ func TestFilter_NonStickyMissingSignalThroughput(t *testing.T) {
 		makeEndpoint("b", 10, -1, -1),
 	}
 	result := p.Filter(context.Background(), nil, endpoints)
-	assert.Equal(t, 1, len(result), "missing non-sticky signal should keep sticky set")
-	assert.Equal(t, "a", result[0].GetMetadata().ID.Name)
+	assert.Equal(t, endpoints, result, "missing non-sticky signal should return all endpoints")
 }
 
 func TestFilter_StickyMissingSignalThroughput(t *testing.T) {
@@ -194,8 +191,7 @@ func TestFilter_StickyMissingSignalThroughput(t *testing.T) {
 		makeEndpoint("b", 10, -1, 50),
 	}
 	result := p.Filter(context.Background(), nil, endpoints)
-	assert.Equal(t, 1, len(result), "missing sticky signal should keep sticky set")
-	assert.Equal(t, "a", result[0].GetMetadata().ID.Name)
+	assert.Equal(t, endpoints, result, "missing sticky signal should return all endpoints")
 }
 
 func TestFilter_MissingSignalBothPredictor(t *testing.T) {
@@ -205,8 +201,7 @@ func TestFilter_MissingSignalBothPredictor(t *testing.T) {
 		makeEndpoint("b", 10, -1, 0),
 	}
 	result := p.Filter(context.Background(), nil, endpoints)
-	assert.Equal(t, 1, len(result), "both sides missing should keep sticky set")
-	assert.Equal(t, "a", result[0].GetMetadata().ID.Name)
+	assert.Equal(t, endpoints, result, "missing signals should return all endpoints")
 }
 
 func TestConsumes_ConditionalAttributes(t *testing.T) {
